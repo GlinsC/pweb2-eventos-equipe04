@@ -8,6 +8,10 @@ const app = express()
 
 app.use(express.json())
 
+app.get('/eventos', (req,res) => {
+    res.json(db.listarTodos());
+} )
+
 
 app.post('/eventos', (req, res) => {
     const dadosEvento = req.body
