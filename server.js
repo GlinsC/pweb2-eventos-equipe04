@@ -8,10 +8,22 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/eventos', (req,res) => {
-    res.json(db.listarTodos());
-} )
+app.get('/eventos', (req, res) => {
 
+    const { modalidade, vagasMin } = req.query
+
+    let eventos = db.listarTodos()
+
+    if (modalidade) {
+        eventos = eventos.filter(evento => evento.modalidade === modalidade) // quesito 7
+    }
+
+    if (vagasMin) {
+        eventos = eventos.filter(evento => evento.vagas >= Number(vagasMin)) // quesito 8
+    }
+
+    res.json(eventos) // melhorando essa parte, praficar mais legível
+})
 
 app.post('/eventos', (req, res) => {
     const dadosEvento = req.body
